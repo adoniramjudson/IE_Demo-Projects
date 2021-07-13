@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@3.3.5/src/sdk.min.js" ></script>
+    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@3.3.5/src/sdk.min.js"></script>
   </head>
   <body>
     <center><h2>Hyperverge WebSDK Demo</h2></center>
@@ -32,17 +32,13 @@
       }
       function runLiveness() {
         hvFaceConfig = new HVFaceConfig();
-        hvFaceConfig.setLivenessEndpoint("https://ind-face-prod.hyperverge.co/v1/photo/liveness")
         hvFaceConfig.setShouldShowInstructionPage(true);
-        hvFaceConfig.setLivenessMode;
         hvFaceConfig.setLivenessAPIParameters({
           rejectFaceMask: 'yes',
           allowEyesClosed: 'no',
           allowMultipleFaces: 'no',
-	      allowOnlyLiveDocument: 'yes',
         });
         HVFaceModule.start(hvFaceConfig, callback);
-        console.log(HVError)
       }
       callback = (HVError, HVResponse) => {
         if (HVError) {
