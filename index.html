@@ -21,15 +21,23 @@
       var docImage = '';
       function runOCR() {
         hvDocConfig = new HVDocConfig();
+        hvDocConfigBack = new HVDocConfig();
         hvDocConfig.setOCRDetails(
           'https://ind-docs.hyperverge.co/v2.0/readKYC',
           hvDocConfig.DocumentSide.FRONT,
           { },
           { },
         );
+        hvDocConfigBack.setOCRDetails(
+          'https://ind-docs.hyperverge.co/v2.0/readKYC',
+          hvDocConfig.DocumentSide.BACK,
+          { },
+          { },
+        );
         hvDocConfig.setShouldShowInstructionPage(true);
-        const result = HVDocsModule.start(hvDocConfig, callbackOCR);
-    console.log(result)
+        HVDocsModule.start(hvDocConfig, callbackOCR);
+        HVDocsModule.start(hvDocConfigBack, callbackOCR);
+    
       }
       function runFaceMatch(){
         console.log(faceImage);
