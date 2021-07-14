@@ -41,10 +41,10 @@
         HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
     
       }
-      async function runFaceMatch(){
+      function runFaceMatch(){
         console.log(faceImage);
         console.log(docImage);
-        await HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
+        HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
         // HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, callbackFaceMatch);
       }
       async function runLiveness() {
@@ -68,10 +68,10 @@
           element.appendChild(para);
         } else {
           var apiResults = HVResponse.getApiResult();
-          console.log(apiResults.result.live)
-          console.log(HVResponse)
+          // console.log(apiResults.result.live)
+          // console.log(HVResponse)
           faceImage = HVResponse.getImageBase64();
-          //console.log(faceImage)
+          console.log(faceImage)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
@@ -94,7 +94,7 @@
           // console.log(apiResults.result.live)
           //console.log(apiResults)
           docImage = HVResponse.getImageBase64();
-          //console.log(docImage)
+          console.log(docImage)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
@@ -126,13 +126,14 @@
       };
       callback = (HVError, HVResponse) => {
         if (HVError) {
+          console.log(HVError)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVError));
           para.appendChild(node);
           var element = document.getElementById('div1');
           element.appendChild(para);
         } else {
-          var apiResults = HVResponse.getApiResult();
+          var apiResults = esponse.getApiResult();
           // console.log(apiResults.result.live)
           //console.log(apiResults)
           // docImage = HVResponse.getImageBase64();
