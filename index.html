@@ -1,22 +1,20 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@3.3.5/src/sdk.min.js"></script>
+    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@3.3.8/src/sdk.min.js"></script>
   </head>
   <body>
     <center><h2>Hyperverge WebSDK Demo</h2></center>
     <div class="container">
       <div class="form-group">
-        <button type="button" onclick="runOCR();" class="btn btn-primary">Run OCR</button>
         <button type="button" onclick="runLiveness();" class="btn btn-primary">Run Face Liveness</button>
-        <button type="button" id="button1" onclick="runFaceMatch();" class="btn btn-primary" style= "display:none;">Run FaceMatch</button>
-
+    <div id="div1"></div>
+    <button type="button" id="button" onclick="runOCR();" class="btn btn-primary" style= "display:none;">Run OCR</button>
+    <button type="button" id="button1" onclick="runFaceMatch();" class="btn btn-primary" style= "display:none;">Run FaceMatch</button>
       </div>
-      <div id="div1"></div>
     </div>
     <script>
-      // client calls the auth api to get the token from their backend server
-      var jwtToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg1N2FjYiIsImhhc2giOiI5NzA4YzVmZTI4Y2UwMWJlYzZhN2I1YjRlYWNjZWFiNjIwNGZjMzZjNDdjMjcxZGRiYWRlYzFmOTJjYjk0ZjUwIiwiaWF0IjoxNjI2MjM2Nzg3LCJleHAiOjE2MjYyNTE3ODcsImp0aSI6ImZmODlmNTNmLWY4ZTEtNGUxOS1hNzIzLWZhYjZkM2M0ZjQ1NyJ9.JsnZspvIIYeClT5MGR_QYlxKJvjHvvSwQjstZsGqJIWa2_LQKa2WFS9G2a6QJclBhYbOirRxeK-dx-hjsIncWjxM2NcBCzcCAseU0qxfJ3mC69xlTthzhqpFx6BHzWeEBPxhgzCqYjT3f2WwshvbhFqOORKtnNBrRUqK73h6wrE"
+      var jwtToken = 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg1N2FjYiIsImhhc2giOiI5NzA4YzVmZTI4Y2UwMWJlYzZhN2I1YjRlYWNjZWFiNjIwNGZjMzZjNDdjMjcxZGRiYWRlYzFmOTJjYjk0ZjUwIiwiaWF0IjoxNjI2MjMxNDk5LCJleHAiOjE2MjYyNjc0OTksImp0aSI6ImM5ZWIyZTFkLWMzMjktNGI2Yi05ZDVkLTIwNWQ2NzcwYmYxMCJ9.pJGvhwAStsj6Xy_6nLknSdx0Zw8jUs4gyQrqk0vYajmqE34KGt_7IYJm2nyUSZfG39l_NNT3UCqq9odn0Fu_6dEt3lREDflEh9hHzP7L-yIZaB9EqyMO37XV63gqydZJT_nt9AWM26kqECXcicL5x5LKJdYbaeCxUEK5Ky-96LE'
       HyperSnapSDK.init(jwtToken, HyperSnapParams.Region.India);
       HyperSnapSDK.startUserSession();
       var faceImage = '';
@@ -30,19 +28,72 @@
           { },
         );
         hvDocConfig.setShouldShowInstructionPage(true);
-        HVDocsModule.start(hvDocConfig, callback);
+        const result = HVDocsModule.start(hvDocConfig, callbackOCR);
+    console.log(result)
       }
-      function runLiveness() {
+      function runFaceMatch(){
+        console.log(faceImage);
+        console.log(docImage);
+        HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
+        // HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, callbackFaceMatch);
+      }
+      async function runLiveness() {
         hvFaceConfig = new HVFaceConfig();
         hvFaceConfig.setShouldShowInstructionPage(true);
         hvFaceConfig.setLivenessAPIParameters({
           rejectFaceMask: 'yes',
           allowEyesClosed: 'no',
           allowMultipleFaces: 'no',
-          allowOnlyLiveDocument: 'yes',
         });
-        HVFaceModule.start(hvFaceConfig, callback);
+        hvFaceConfig.setLivenessMode({
+          none: 'true'})
+        var result = await HVFaceModule.start(hvFaceConfig,  callbackLiveness);
       }
+      callbackLiveness = (HVError, HVResponse) => {
+        if (HVError) {
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVError));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+        } else {
+          var apiResults = HVResponse.getApiResult();
+          console.log(apiResults.result.live)
+          console.log(HVResponse)
+          faceImage = HVResponse.getImageBase64();
+          //console.log(faceImage)
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+      if(apiResults.result.live === 'yes'){
+      document.getElementById("button").style.display = "block";
+      }
+        }
+      };
+      callbackOCR = (HVError, HVResponse) => {
+        if (HVError) {
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVError));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+        } else {
+          var apiResults = HVResponse.getApiResult();
+          // console.log(apiResults.result.live)
+          //console.log(apiResults)
+          docImage = HVResponse.getImageBase64();
+          //console.log(docImage)
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+          document.getElementById("button1").style.display = "block";
+          document.getElementById("button").style.display = "none";
+        }
+      };
       callback = (HVError, HVResponse) => {
         if (HVError) {
           var para = document.createElement('p');
@@ -51,11 +102,18 @@
           var element = document.getElementById('div1');
           element.appendChild(para);
         } else {
+          var apiResults = HVResponse.getApiResult();
+          // console.log(apiResults.result.live)
+          //console.log(apiResults)
+          // docImage = HVResponse.getImageBase64();
+          // console.log(docImage)
           var para = document.createElement('p');
-          var node = document.createTextNode(JSON.stringify(HVResponse));
+          var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
           var element = document.getElementById('div1');
           element.appendChild(para);
+          document.getElementById("button1").style.display = "none";
+          document.getElementById("button").style.display = "none";
         }
       };
     </script>
