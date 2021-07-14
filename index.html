@@ -28,15 +28,15 @@
           { },
           { },
         );
-        // hvDocConfigBack.setOCRDetails(
-        //   'https://ind-docs.hyperverge.co/v2.0/readKYC',
-        //   hvDocConfig.DocumentSide.BACK,
-        //   { },
-        //   { },
-        // );
+        hvDocConfigBack.setOCRDetails(
+          'https://ind-docs.hyperverge.co/v2.0/readKYC',
+          hvDocConfig.DocumentSide.BACK,
+          { },
+          { },
+        );
         hvDocConfig.setShouldShowInstructionPage(true);
         HVDocsModule.start(hvDocConfig, callbackOCRFront);
-        // HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
+        HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
     
       }
       function runFaceMatch(){
@@ -98,7 +98,7 @@
           para.appendChild(node);
           var element = document.getElementById('div1');
           element.appendChild(para);
-          document.getElementById("button1").style.display = "block";
+          // document.getElementById("button1").style.display = "block";
           document.getElementById("button").style.display = "none";
         }
       };
