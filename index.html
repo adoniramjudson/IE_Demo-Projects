@@ -30,15 +30,15 @@
         );
         hvDocConfig.setShouldShowInstructionPage(true);
         HVDocsModule.start(hvDocConfig, callbackOCRFront);
-        hvDocConfigBack.setOCRDetails(
-          'https://ind-docs.hyperverge.co/v2.0/readKYC',
-          hvDocConfig.DocumentSide.BACK,
-          { },
-          { },
-        );
-        hvDocConfig.setShouldShowInstructionPage(true);
-        // HVDocsModule.start(hvDocConfig, callbackOCRFront);
-        HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
+        // hvDocConfigBack.setOCRDetails(
+        //   'https://ind-docs.hyperverge.co/v2.0/readKYC',
+        //   hvDocConfig.DocumentSide.BACK,
+        //   { },
+        //   { },
+        // );
+        // hvDocConfig.setShouldShowInstructionPage(true);
+        // // HVDocsModule.start(hvDocConfig, callbackOCRFront);
+        // HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
     
       }
       function runFaceMatch(){
