@@ -41,10 +41,10 @@
         HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
     
       }
-      function runFaceMatch(){
+      async function runFaceMatch(){
         console.log(faceImage);
         console.log(docImage);
-        HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
+        await HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
         // HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, callbackFaceMatch);
       }
       async function runLiveness() {
