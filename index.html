@@ -71,7 +71,7 @@
           // console.log(apiResults.result.live)
           console.log(HVResponse)
           faceImage = HVResponse.getImageBase64();
-          console.log(faceImage, "selfie")
+          console.log("selfie" , faceImage)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
@@ -94,7 +94,7 @@
           // console.log(apiResults.result.live)
           console.log(apiResults)
           docImage = HVResponse.getImageBase64();
-          console.log(docImage, "adhar")
+          console.log("adhar" , docImage)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
