@@ -9,12 +9,14 @@
       <div class="form-group">
         <button type="button" onclick="runOCR();" class="btn btn-primary">Run OCR</button>
         <button type="button" onclick="runLiveness();" class="btn btn-primary">Run Face Liveness</button>
+        <button type="button" id="button1" onclick="runFaceMatch();" class="btn btn-primary" style= "display:none;">Run FaceMatch</button>
+
       </div>
       <div id="div1"></div>
     </div>
     <script>
       // client calls the auth api to get the token from their backend server
-      var jwtToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg1N2FjYiIsImhhc2giOiI5NzA4YzVmZTI4Y2UwMWJlYzZhN2I1YjRlYWNjZWFiNjIwNGZjMzZjNDdjMjcxZGRiYWRlYzFmOTJjYjk0ZjUwIiwiaWF0IjoxNjI2MjM1MDI3LCJleHAiOjE2MjYyMzY1MjcsImp0aSI6IjAzNGY2MGJmLWIxY2QtNDI4ZS04OTJlLWEzZjU5YTY2YzQ4NSJ9.UdP-YB0oFbi6sXyLHeHM7cAMR7ApUAj2OFWHEWOs1UCkZeWgq8zJgxxLn4fhS5NOgtoFXZNFcp5Jx4Jgvb15LAmbywOZGlgWslS_K0x2uTQQLoOe20Wdsp23G4xsOuvx9YGi6cLRZHjEhwnrGrVM_w6aNUzy1Y-wuCkM1jHAjCg"
+      var jwtToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg1N2FjYiIsImhhc2giOiI5NzA4YzVmZTI4Y2UwMWJlYzZhN2I1YjRlYWNjZWFiNjIwNGZjMzZjNDdjMjcxZGRiYWRlYzFmOTJjYjk0ZjUwIiwiaWF0IjoxNjI2MjM2Nzg3LCJleHAiOjE2MjYyNTE3ODcsImp0aSI6ImZmODlmNTNmLWY4ZTEtNGUxOS1hNzIzLWZhYjZkM2M0ZjQ1NyJ9.JsnZspvIIYeClT5MGR_QYlxKJvjHvvSwQjstZsGqJIWa2_LQKa2WFS9G2a6QJclBhYbOirRxeK-dx-hjsIncWjxM2NcBCzcCAseU0qxfJ3mC69xlTthzhqpFx6BHzWeEBPxhgzCqYjT3f2WwshvbhFqOORKtnNBrRUqK73h6wrE"
       HyperSnapSDK.init(jwtToken, HyperSnapParams.Region.India);
       HyperSnapSDK.startUserSession();
       var faceImage = '';
