@@ -47,7 +47,7 @@
         HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, { }, { }, callback);
         // HVNetworkHelper.makeFaceMatchCall(faceImage, docImage, callbackFaceMatch);
       }
-      async function runLiveness() {
+      function runLiveness() {
         hvFaceConfig = new HVFaceConfig();
         hvFaceConfig.setShouldShowInstructionPage(true);
         hvFaceConfig.setLivenessAPIParameters({
@@ -57,7 +57,7 @@
         });
         hvFaceConfig.setLivenessMode({
           none: 'true'})
-        var result = await HVFaceModule.start(hvFaceConfig,  callbackLiveness);
+        var result = HVFaceModule.start(hvFaceConfig,  callbackLiveness);
       }
       callbackLiveness = (HVError, HVResponse) => {
         if (HVError) {
@@ -69,9 +69,9 @@
         } else {
           var apiResults = HVResponse.getApiResult();
           // console.log(apiResults.result.live)
-          // console.log(HVResponse)
+          console.log(HVResponse)
           faceImage = HVResponse.getImageBase64();
-          console.log(faceImage)
+          console.log(faceImage, "selfie")
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
@@ -92,9 +92,9 @@
         } else {
           var apiResults = HVResponse.getApiResult();
           // console.log(apiResults.result.live)
-          //console.log(apiResults)
+          console.log(apiResults)
           docImage = HVResponse.getImageBase64();
-          console.log(docImage)
+          console.log(docImage, "adhar")
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
           para.appendChild(node);
