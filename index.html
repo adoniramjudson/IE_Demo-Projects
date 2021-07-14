@@ -35,8 +35,8 @@
           { },
         );
         hvDocConfig.setShouldShowInstructionPage(true);
-        HVDocsModule.start(hvDocConfig, callbackOCR);
-        HVDocsModule.start(hvDocConfigBack, callbackOCR);
+        HVDocsModule.start(hvDocConfig, callbackOCRFront);
+        HVDocsModule.start(hvDocConfigBack, callbackOCRBack);
     
       }
       function runFaceMatch(){
@@ -80,7 +80,7 @@
       }
         }
       };
-      callbackOCR = (HVError, HVResponse) => {
+      callbackOCRFront = (HVError, HVResponse) => {
         if (HVError) {
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVError));
@@ -92,6 +92,27 @@
           // console.log(apiResults.result.live)
           //console.log(apiResults)
           docImage = HVResponse.getImageBase64();
+          //console.log(docImage)
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+          document.getElementById("button1").style.display = "block";
+          document.getElementById("button").style.display = "none";
+        }
+      };
+      callbackOCRBack = (HVError, HVResponse) => {
+        if (HVError) {
+          var para = document.createElement('p');
+          var node = document.createTextNode(JSON.stringify(HVError));
+          para.appendChild(node);
+          var element = document.getElementById('div1');
+          element.appendChild(para);
+        } else {
+          var apiResults = HVResponse.getApiResult();
+          // console.log(apiResults.result.live)
+          //console.log(apiResults)
           //console.log(docImage)
           var para = document.createElement('p');
           var node = document.createTextNode(JSON.stringify(HVResponse.getApiResult()));
